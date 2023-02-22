@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Appointment App</title>
+    <link rel="stylesheet" href="mystyle.css" />
+  </head>
+  <body>
+    <h1>Expense Tracker</h1>
+    <section>
+      <div>
+        <form onsubmit="saveToLocalStorage(event)">
+          <label>Amount</label>
+          <input id="amount" type="number" name="amount" required />
+          <label>Description</label>
+          <input id="desc" type="text" name="desc" required />
+          <label>Category</label>
+          <!-- <input id="phonenumber" type="text" name="phonenumber" required><br><br> -->
+          <select id="category" name="category" required>
+            <option value="Grocery">Grocery</option>
+            <option value="Party">Party</option>
+            <option value="Study">Study</option>
+            <option value="cannotsay">cannotsay</option>
+          </select>
+          <button>Submit</button>
+        </form>
+      </div>
+      <ul id="listofusers"></ul>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"></script>
+
+    <script src="main.js"></script>
+  </body>
+</html>

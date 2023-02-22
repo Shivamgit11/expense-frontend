@@ -1,0 +1,39 @@
+body{
+    background-color: black;
+    color: white;
+    text-align: center;
+}
+h1{
+    border: 1px solid white;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    
+    font-size: 40px;
+}
+section{
+    background-color: black;
+    color: white;
+}
+button{
+    background-color: black;
+    color: white;
+    border: 2px solid cyan;
+    margin-left: 5px;
+}
+ul{
+    background-color: white;
+    font-size: 20px;
+    color: black;
+    margin-left: 25%;
+    margin-right: 25%;
+}
+form{
+    
+    
+}
+
+div{
+    border: 2px solid beige;
+    margin-left: 25%;
+    margin-right: 25%;
+}
