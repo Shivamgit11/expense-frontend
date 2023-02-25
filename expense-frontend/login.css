@@ -1,0 +1,22 @@
+body{
+    padding-top: 10%;
+    text-align: center;
+    background-color: antiquewhite;
+}
+
+div{
+    margin-top: 10px;
+}
+
+form{
+    border: 2px solid blue;
+    margin-left: 30%;
+    margin-right: 30%;
+    background-color: rgb(184, 124, 46);
+}
+
+button{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: aquamarine;
+}

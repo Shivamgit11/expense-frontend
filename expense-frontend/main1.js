@@ -43,10 +43,6 @@ function shownewUserOnScreen(user) {
   console.log(user, "shownewuse");
   const parentNode = document.getElementById("listofusers");
 
-//   const childHtml = `<li id=${user.id}>${user.amount} -- ${user.description} -- ${user.categoru}
-//                                   <button onclick=deleteuser('${user.id}')> DeleteUser </button>
-//                                   <button onclick=editUserDetails('${user.amount}','${user.description}','${user.categoru}','${user.id}')>Edit User</button>
-//                               </li>`;
   const childHTML = `<li id=${user.id}> ₹${user.amount} - ${user.description} - ${user.categoru} 
             <button onclick=editUserDetails('${user.amount}','${user.description}','${user.categoru}','${user.id}')>Edit</button>
             <button onclick=deleteUser('${user.id}')> Delete</button> </li>`;
