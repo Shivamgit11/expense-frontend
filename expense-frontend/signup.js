@@ -11,7 +11,7 @@ function saveLogin(event) {
     password,
   };
 
-  console.log(obj);
+  console.log(obj,"frontend");
 
   axios
     .post("http://localhost:3000/auth/authdetails", obj)

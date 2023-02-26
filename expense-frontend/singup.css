@@ -12,11 +12,12 @@ form{
     border: 2px solid blue;
     margin-left: 30%;
     margin-right: 30%;
-    background-color: rgb(184, 124, 46);
+    background-color: rgb(240, 229, 214);
 }
 
 button{
     margin-top: 10px;
     margin-bottom: 10px;
     background-color: aquamarine;
+    border-radius: 2px;
 }

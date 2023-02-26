@@ -4,19 +4,19 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login page</title>
-    <link rel="stylesheet" href="login.css" />
+    <title>signup page</title>
+    <link rel="stylesheet" href="singup.css" />
   </head>
   <body>
-    <h2>Login form</h2>
+    <h2>signup form</h2>
     <form onsubmit="saveLogin(event)">
       <div>
         <label>name:</label>
-        <input type="text" name="name" placeholder="your name" />
+        <input type="text" name="name" placeholder="your name" required/>
       </div>
       <div>
         <label>Email</label>
-        <input type="email" name="email" placeholder="abc@gmail.com" />
+        <input type="email" name="email" placeholder="abc@gmail.com"  required/>
       </div>
       <div>
         <label>Password</label>
@@ -24,13 +24,15 @@
           type="password"
           name="password"
           placeholder="enter your password"
+          required
         />
       </div>
 
-      <button>Login</button>
+      <button>SignUp</button>
     </form>
+    <a href="./login/login.html" id="link">Existing User - Login</a>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"></script>
-    <script src="login.js"></script>
+    <script src="signup.js"></script>
   </body>
 </html>
