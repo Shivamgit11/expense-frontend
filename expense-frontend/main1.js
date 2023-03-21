@@ -30,6 +30,29 @@ async function saveToLocalStorage(event) {
   //shownewUserOnScreen(obj);
 }
 
+//download expense
+function download() {
+  axios
+    .get("http://localhost:3000/user/download", {
+      headers: { Authorization: token },
+    })
+    .then((response) => {
+      if (response.status === 201) {
+        //the bcakend is essentially sending a download link
+        //  which if we open in browser, the file would download
+        var a = document.createElement("a");
+        a.href = response.data.fileUrl;
+        a.download = "myexpense.csv";
+        a.click();
+      } else {
+        throw new Error(response.data.message);
+      }
+    })
+    .catch((err) => {
+      showError(err);
+    });
+}
+
 function showPremiumUserMessage() {
   document.getElementById("rzp-button1").style.visibility = "hidden";
   document.getElementById("message").innerHTML = "you are a premium user";
@@ -84,26 +107,28 @@ function shownewUserOnScreen(user) {
   parentNode.innerHTML = parentNode.innerHTML + childHTML;
 }
 
+//showleaderboard
 
-//showleaderboard 
-
-function showleaderboard(){
-  const inputElement = document.createElement('input');
-  inputElement.type = 'buttton';
-  inputElement.value = 'show leaderboard';
-  inputElement.onclick = async() => {
-    const token = localStorage.getItem('token');
-    const userLeaderboardArray = await axios.get('http://localhost:3000/premium/showLeaderboard',{
-      headers: { Authorization: token },
-    });
-    console.log("serleaderboard",userLeaderboardArray);
-    var leaderboardEle = document.getElementById('leaderboard');
-    leaderboardEle.innerHTML += '<h1>Leader Board</h1>'
+function showleaderboard() {
+  const inputElement = document.createElement("input");
+  inputElement.type = "buttton";
+  inputElement.value = "show leaderboard";
+  inputElement.onclick = async () => {
+    const token = localStorage.getItem("token");
+    const userLeaderboardArray = await axios.get(
+      "http://localhost:3000/premium/showLeaderboard",
+      {
+        headers: { Authorization: token },
+      }
+    );
+    console.log("serleaderboard", userLeaderboardArray);
+    var leaderboardEle = document.getElementById("leaderboard");
+    leaderboardEle.innerHTML += "<h1>Leader Board</h1>";
     userLeaderboardArray.data.forEach((userDetails) => {
-      leaderboardEle.innerHTML += `<li>Name - ${userDetails.name} Total Expense - ${userDetails.total_cost} </li>`
-    })
-  }
-  document.getElementById('message').appendChild(inputElement)
+      leaderboardEle.innerHTML += `<li>Name - ${userDetails.name} Total Expense - ${userDetails.totalExpenses} </li>`;
+    });
+  };
+  document.getElementById("message").appendChild(inputElement);
 }
 //Edit User
 function editUserDetails(amount, description, category, userId) {

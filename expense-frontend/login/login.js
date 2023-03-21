@@ -36,3 +36,7 @@ function loginhandler(event) {
       document.body.innerHTML += `<div style="color:red";>${err.message}</div>`;
     });
 }
+
+function forgotpassword() {
+  window.location.href = "../forgot/forgot.html"
+}
