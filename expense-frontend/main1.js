@@ -32,8 +32,10 @@ async function saveToLocalStorage(event) {
 
 //download expense
 function download() {
+  const token = localStorage.getItem("token");
+  console.log("inside download file");
   axios
-    .get("http://localhost:3000/user/download", {
+    .get("http://localhost:3000/expense/download", {
       headers: { Authorization: token },
     })
     .then((response) => {
@@ -41,7 +43,7 @@ function download() {
         //the bcakend is essentially sending a download link
         //  which if we open in browser, the file would download
         var a = document.createElement("a");
-        a.href = response.data.fileUrl;
+        a.href = response.data.fileURL;
         a.download = "myexpense.csv";
         a.click();
       } else {
@@ -49,7 +51,7 @@ function download() {
       }
     })
     .catch((err) => {
-      showError(err);
+      console.log(err);
     });
 }
 
