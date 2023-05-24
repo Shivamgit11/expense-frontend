@@ -1,3 +1,5 @@
+const pagination = document.getElementById("pagination");
+
 async function saveToLocalStorage(event) {
   event.preventDefault();
   const amount = event.target.amount.value;
@@ -39,7 +41,7 @@ function download() {
       headers: { Authorization: token },
     })
     .then((response) => {
-      if (response.status === 201) {
+      if (response.status === 200) {
         //the bcakend is essentially sending a download link
         //  which if we open in browser, the file would download
         var a = document.createElement("a");
@@ -53,6 +55,7 @@ function download() {
     .catch((err) => {
       console.log(err);
     });
+  //second task
 }
 
 function showPremiumUserMessage() {
@@ -84,15 +87,26 @@ window.addEventListener("DOMContentLoaded", () => {
     showPremiumUserMessage();
     showleaderboard();
   }
+
+  const objUrlParams = new URLSearchParams(window.location.search);
+  const page = objUrlParams.get("page") || 1;
+  console.log(page);
   axios
-    .get("http://localhost:3000/expense/expensedetails", {
-      headers: { Authorization: token },
-    })
+    .get(
+      `http://localhost:3000/expense/expensedetails?page=${page}&items_per_page=5`,
+      {
+        headers: { Authorization: token },
+      }
+    )
     .then((response) => {
       console.log(response);
-      for (var i = 0; i < response.data.expenses.length; i++) {
-        shownewUserOnScreen(response.data.expenses[i]);
-      }
+      // for (var i = 0; i < response.data.expenses.length; i++) {
+      // response.data.Expense.map((item) => {
+      shownewUserOnScreen(response.data.Expense);
+      // });
+
+      showPagination(response.data);
+      // }
     })
     .catch((error) => {
       console.log(error);
@@ -103,10 +117,24 @@ function shownewUserOnScreen(user) {
   console.log(user, "shownewuse");
   const parentNode = document.getElementById("listofusers");
 
-  const childHTML = `<li id=${user.id}> ₹${user.amount} - ${user.description} - ${user.categoru} 
-            <button onclick=editUserDetails('${user.amount}','${user.description}','${user.categoru}','${user.id}')>Edit</button>
-            <button onclick=deleteUser('${user.id}')> Delete</button> </li>`;
-  parentNode.innerHTML = parentNode.innerHTML + childHTML;
+  // Clear existing expense entries on the screen
+  while (parentNode.firstChild) {
+    parentNode.removeChild(parentNode.firstChild);
+  }
+
+  if (Array.isArray(user)) {
+    user.forEach((user) => {
+      const childHTML = `<li id=${user.id}> ₹${user.amount} - ${user.description} - ${user.categoru} 
+      <button onclick=editUserDetails('${user.amount}','${user.description}','${user.categoru}','${user.id}')>Edit</button>
+      <button onclick=deleteUser('${user.id}')> Delete</button> </li>`;
+      parentNode.insertAdjacentHTML("beforeend", childHTML);
+    });
+  } else {
+    const childHTML = `<li id=${user.id}> ₹${user.amount} - ${user.description} - ${user.categoru} 
+    <button onclick=editUserDetails('${user.amount}','${user.description}','${user.categoru}','${user.id}')>Edit</button>
+    <button onclick=deleteUser('${user.id}')> Delete</button> </li>`;
+    parentNode.insertAdjacentHTML("beforeend", childHTML);
+  }
 }
 
 //showleaderboard
@@ -125,9 +153,13 @@ function showleaderboard() {
     );
     console.log("serleaderboard", userLeaderboardArray);
     var leaderboardEle = document.getElementById("leaderboard");
-    leaderboardEle.innerHTML += "<h1>Leader Board</h1>";
+
+    while (leaderboardEle.firstChild) {
+      leaderboardEle.removeChild(leaderboardEle.firstChild);
+    }
+    leaderboardEle.innerHTML += "<h1 style='color: white;'>Leader Board</h1>";
     userLeaderboardArray.data.forEach((userDetails) => {
-      leaderboardEle.innerHTML += `<li>Name - ${userDetails.name} Total Expense - ${userDetails.totalExpenses} </li>`;
+      leaderboardEle.innerHTML += `<li style='color: white;'>Name - ${userDetails.name} Total Expense - ${userDetails.totalExpenses} </li>`;
     });
   };
   document.getElementById("message").appendChild(inputElement);
@@ -210,3 +242,57 @@ document.getElementById("rzp-button1").onclick = async function (e) {
     alert("Something went wrong");
   });
 };
+
+//pagination
+function showPagination({
+  currentPage,
+  hasNextPage,
+  hasPreviousPage,
+  nextPage,
+  previousPage,
+  lastPage,
+}) {
+  pagination.innerHTML = "";
+  if (hasPreviousPage) {
+    const btn2 = document.createElement("button");
+    btn2.innerHTML = previousPage;
+    btn2.addEventListener("click", () => getExpenses(previousPage));
+    pagination.appendChild(btn2);
+  }
+  const btn1 = document.createElement("button");
+  btn1.innerHTML = `<h3>${currentPage}</h3>`;
+  btn1.addEventListener("click", () => getExpenses(currentPage));
+  pagination.appendChild(btn1);
+  if (hasNextPage) {
+    const btn3 = document.createElement("button");
+    btn3.innerHTML = nextPage;
+    btn3.addEventListener("click", () => getExpenses(nextPage));
+    pagination.appendChild(btn3);
+  }
+}
+function getExpenses(page) {
+  let items_per_page = document.getElementById("limitM").value;
+  console.log("pageNo", page, "item", items_per_page);
+
+  const token = localStorage.getItem("token");
+  axios
+    .get(
+      `http://localhost:3000/expense/expensedetails?page=${page}&items_per_page=${items_per_page}`,
+      {
+        headers: { Authorization: token },
+      }
+    )
+    .then((response) => {
+      console.log(response);
+      // for (var i = 0; i < response.data.expenses.length; i++) {
+      // response.data.Expense.map((item) => {
+      shownewUserOnScreen(response.data.Expense);
+      // });
+
+      showPagination(response.data);
+      // }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
