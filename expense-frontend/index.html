@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="mystyle.css" />
   </head>
   <body>
-    <h1 style="color: aliceblue;">Expense Tracker</h1>
+    <h1 style="color: aliceblue">Expense Tracker</h1>
     <section>
       <div>
         <form onsubmit="saveToLocalStorage(event)">
@@ -31,9 +31,6 @@
         <button onclick="download()" id="downloadexpense">Download File</button>
         <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
       </div>
-      <ul id="listofusers"></ul>
-      <div id="pagination"></div>
-
       <!-- paginationn -->
 
       <br /><br />
@@ -42,13 +39,15 @@
           <option value="2">2</option>
           <option value="3">3</option>
           <option value="4">4</option>
-          <option value="5">5</option></select
+          <option value="5" selected>5</option></select
         >per page
       </div>
       <!-- <div id="pagination"></div>
       <br /><br /> -->
+      <ul id="listofusers"></ul>
+      <div id="pagination"></div>
 
-      <div><ul id="expenseList"></ul></div>
+      <!-- <div><ul id="expenseList"></ul></div> -->
 
       <!--  -->
     </section>

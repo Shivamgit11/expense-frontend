@@ -22,7 +22,7 @@ async function saveToLocalStorage(event) {
     })
     .then((response) => {
       console.log(response.data.expense);
-      shownewUserOnScreen(response.data.expense);
+      // shownewUserOnScreen(response.data.expense);
       // console.log(response);
     })
     .catch((err) => {
@@ -81,6 +81,7 @@ function parseJwt(token) {
 window.addEventListener("DOMContentLoaded", () => {
   const token = localStorage.getItem("token");
   const decodedtoken = parseJwt(token);
+  console.log(token);
   console.log(decodedtoken);
   console.log(decodedtoken.isPremiumUser);
   if (decodedtoken.isPremiumUser) {
@@ -217,7 +218,7 @@ document.getElementById("rzp-button1").onclick = async function (e) {
     order_id: response.data.order.id, //for one time payment
     //This handler function will handle the success payment
     handler: async function (response) {
-      await axios.post(
+      const res = await axios.post(
         "http://localhost:3000/purchase/updatetransactionstatus",
         {
           order_id: options.order_id,
@@ -230,6 +231,7 @@ document.getElementById("rzp-button1").onclick = async function (e) {
       document.getElementById("rzp-button1").style.visibility = "hidden";
       document.getElementById("message").innerHTML = "you are a premium user";
       localStorage.setItem("token", res.data.token);
+      console.log("utoken", res);
       showleaderboard();
     },
   };
@@ -252,6 +254,7 @@ function showPagination({
   previousPage,
   lastPage,
 }) {
+  console.log(lastPage);
   pagination.innerHTML = "";
   if (hasPreviousPage) {
     const btn2 = document.createElement("button");
