@@ -1,11 +1,14 @@
 const pagination = document.getElementById("pagination");
 
+let lastpaginationpage = 1;
+console.log(lastpaginationpage);
+
 async function saveToLocalStorage(event) {
   event.preventDefault();
   const amount = event.target.amount.value;
   const desc = event.target.desc.value;
   const category = event.target.category.value;
-
+  console.log("last page", lastpaginationpage);
   const obj = {
     amount,
     desc,
@@ -24,10 +27,14 @@ async function saveToLocalStorage(event) {
       console.log(response.data.expense);
       // shownewUserOnScreen(response.data.expense);
       // console.log(response);
+      getExpenses(lastpaginationpage);
     })
     .catch((err) => {
       console.log(err);
     });
+
+  console.log("checking this line", lastpaginationpage);
+
   // localStorage.setItem(obj.email, JSON.stringify(obj));
   //shownewUserOnScreen(obj);
 }
@@ -78,6 +85,10 @@ function parseJwt(token) {
 
   return JSON.parse(jsonPayload);
 }
+
+const objUrlParamcs = new URLSearchParams(window.location.search);
+const ppage = objUrlParamcs.get("page") || 1;
+
 window.addEventListener("DOMContentLoaded", () => {
   const token = localStorage.getItem("token");
   const decodedtoken = parseJwt(token);
@@ -116,6 +127,9 @@ window.addEventListener("DOMContentLoaded", () => {
 
 function shownewUserOnScreen(user) {
   console.log(user, "shownewuse");
+
+  // getExpenses(lastpaginationpage);
+
   const parentNode = document.getElementById("listofusers");
 
   // Clear existing expense entries on the screen
@@ -255,6 +269,7 @@ function showPagination({
   lastPage,
 }) {
   console.log(lastPage);
+  lastpaginationpage = lastPage;
   pagination.innerHTML = "";
   if (hasPreviousPage) {
     const btn2 = document.createElement("button");
